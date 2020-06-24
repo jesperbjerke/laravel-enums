@@ -1,6 +1,7 @@
 {
     "name": "bjerke/laravel-enums",
     "description": "Helpers for handling enums in Laravel",
+    "license": "MIT",
     "type": "library",
     "require": {
         "php": ">=7.2"
