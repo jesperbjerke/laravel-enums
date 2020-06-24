@@ -5,7 +5,7 @@ Base-class for easier enum management and translation in Laravel.
 ### Installation:
 
 ```shell script
-composer require bjerke/enum
+composer require bjerke/laravel-enums
 ```
 
 ## Usage:
