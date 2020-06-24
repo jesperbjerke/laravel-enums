@@ -1,0 +1,15 @@
+{
+    "name": "bjerke/laravel-enums",
+    "description": "Helpers for handling enums in Laravel",
+    "type": "library",
+    "require": {
+        "php": ">=7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bjerke\\Enum\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
