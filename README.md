@@ -1,6 +1,13 @@
 # Laravel Enums
 
-Base-class for easier enum management and translation in Laravel.
+This package provides a trait with helper methods for enum management and translation in Laravel.
+
+__Important:__ This package has been rebuilt as of v2 to work with native PHP enums instead of class constants. As such, PHP 8.1 is now required. See [UPGRADE.md](UPGRADE.md) for more details.
+
+### Requirements:
+
+* PHP 8.1 or higher
+* Will only work with [backed enums](https://www.php.net/manual/en/language.enumerations.backed.php)
 
 ### Installation:
 
@@ -13,14 +20,16 @@ composer require bjerke/laravel-enums
 ```php
 namespace App\Enums;
 
-use Bjerke\Enum\BaseEnum;
+use Bjerke\Enum\HasTranslations;
+use Bjerke\Enum\UsesTranslations;
 
-final class MyEnum extends BaseEnum
-{
-    public const MY_VALUE = 1;
-    public const MY_OTHER_VALUE = 0;
+enum PostStatus: int implements HasTranslations {
+    use UsesTranslations;
+
+    case DRAFT = 10;
+    case PUBLISHED = 20;
+    case ARCHIVED = 30;
 }
-
 ```
 
 Which will then allow you to define the translated versions of these values in Laravel translation file called `enums.php`:
@@ -31,21 +40,20 @@ Which will then allow you to define the translated versions of these values in L
 use App\Enums\MyEnum;
 
 return [
-    'my_enum' => [
-        MyEnum::MY_VALUE => 'My value',
-        MyEnum::MY_OTHER_VALUE => 'My other value'
+    'post_status' => [
+        PostStatus::DRAFT->value => 'Draft',
+        PostStatus::PUBLISHED->value => 'Published'
+        PostStatus::ARCHIVED->value => 'Archived'
     ]
 ];
-
 ```
 
 Which in turn will enable you to fetch the translated values as:
 ```php
-MyEnum::getTranslated();
+PostStatus::DRAFT->translate(); // return translation for this case
+PostStatus::getTranslations(); // return all translations
 ```
 
-There's also some helper methods for retrieving the constants:
+There's also a helper method for retrieving cases:
 
-`MyEnum::getConstants()` - Returns an array of "enum key" => "enum value"
-
-`MyEnum::getConstantsFlipped()` - Returns an array of "enum value" => "enum key"
+`PostStatus::getCasesAsArray()` - Returns an array of "enum key" => "enum value"
